@@ -8,6 +8,7 @@ MOVE_DELTAS = {
     "right": (1, 0),
 }
 INDEX_TO_DIR = {0: "up", 2: "right", 4: "down", 6: "left"}
+# Used for backtracking
 REVERSE_MOVE = {
     "up": "down",
     "down": "up",
@@ -24,10 +25,10 @@ def get_valid_moves(state_vector):
     return [INDEX_TO_DIR[i] for i in INDEX_TO_DIR if state_vector[i] == '0']
 
 def dfs_agent():
-    visited = set()
+    visited = set() # Keeps track of all visited positions
     current_pos = (0, 0)
     visited.add(current_pos)
-    path_stack = []  # To allow backtracking
+    path_stack = []  # Tracks path history for backtracking
 
     # Initial state read
     state_vector = send_command_and_read_result("")
@@ -61,6 +62,7 @@ def dfs_agent():
 
         if not moved:
             if not path_stack:
+                # No unvisited neighbors means dead end
                 print("🔁 No more paths to backtrack. Goal not found.")
                 return
             # Backtrack
@@ -69,5 +71,6 @@ def dfs_agent():
             current_pos = (current_pos[0] + dx, current_pos[1] + dy)
             state_vector = send_command_and_read_result(back)
 
+# Run the agent
 if __name__ == "__main__":
     dfs_agent()
