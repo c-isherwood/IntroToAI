@@ -35,7 +35,7 @@ def dfs_agent():
 
     while True:
         if state_vector[0] == "goal":
-            print(f"🎯 Goal reached in {state_vector[1]} steps!")
+            print(f"Goal reached in {state_vector[1]} steps!")
             return
 
         valid_moves = get_valid_moves(state_vector)
@@ -51,7 +51,7 @@ def dfs_agent():
 
                 # Confirm if we reached the goal
                 if state_vector[0] == "goal":
-                    print(f"🎯 Goal reached in {state_vector[1]} steps!")
+                    print(f"Goal reached in {state_vector[1]} steps!")
                     return
 
                 visited.add(next_pos)
@@ -63,7 +63,7 @@ def dfs_agent():
         if not moved:
             if not path_stack:
                 # No unvisited neighbors means dead end
-                print("🔁 No more paths to backtrack. Goal not found.")
+                print("No more paths to backtrack. Goal not found.")
                 return
             # Backtrack
             back = path_stack.pop()
