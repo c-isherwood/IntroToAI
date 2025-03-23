@@ -27,21 +27,20 @@ def dfs_agent():
     visited = set()
     current_pos = (0, 0)
     visited.add(current_pos)
-    path_stack = []   # Tracks path history for backtracking
+    path_stack = []  # To allow backtracking
 
     # Initial state read
     state_vector = send_command_and_read_result("")
 
     while True:
         if state_vector[0] == "goal":
-            print(f"Goal reached in {state_vector[1]} steps!")
+            print(f"🎯 Goal reached in {state_vector[1]} steps!")
             return
 
         valid_moves = get_valid_moves(state_vector)
         moved = False
 
         for move in valid_moves:
-            # Determine new position if we move in this direction
             dx, dy = MOVE_DELTAS[move]
             next_pos = (current_pos[0] + dx, current_pos[1] + dy)
 
@@ -51,7 +50,7 @@ def dfs_agent():
 
                 # Confirm if we reached the goal
                 if state_vector[0] == "goal":
-                    print(f"Goal reached in {state_vector[1]} steps!")
+                    print(f"🎯 Goal reached in {state_vector[1]} steps!")
                     return
 
                 visited.add(next_pos)
@@ -62,7 +61,7 @@ def dfs_agent():
 
         if not moved:
             if not path_stack:
-                print("No more paths to backtrack. Goal not found.")
+                print("🔁 No more paths to backtrack. Goal not found.")
                 return
             # Backtrack
             back = path_stack.pop()
@@ -70,6 +69,5 @@ def dfs_agent():
             current_pos = (current_pos[0] + dx, current_pos[1] + dy)
             state_vector = send_command_and_read_result(back)
 
-# Run the agent
 if __name__ == "__main__":
     dfs_agent()
